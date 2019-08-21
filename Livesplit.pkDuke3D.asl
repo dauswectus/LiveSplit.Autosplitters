@@ -15,13 +15,6 @@ state("pkDuke3d")
 
 startup
 {
-	vars.Episodes = new Dictionary<byte, string>
-	{
-		{0, "L.A. Meltdown"},
-		{1, "Lunar Apocalypse"},
-		{2, "Shrapnel City"},
-		{3, "The Birth"}
-	};
 	vars.E1Levels = new Dictionary<byte, string>
 	{
 		{0, "E1L1: Hollywood Holocaust"},
