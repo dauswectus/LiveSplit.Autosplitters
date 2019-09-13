@@ -6,15 +6,28 @@ state("pkDuke3d")
 	byte IsMenuActive : 0x034B364, 0x33C; // Is menu active? (0, 1)
 	byte CurrentEpisode : 0x02A7420, 0x3C4; // Current Episode (0, 1, 2, 3)
 	byte CurrentMap : 0x021B328, 0x34C; // Current Map (values below)
+	
+	
 	/*
 		E1: 0-7, done: 4 -> 5
 		E2 & E3: 0-10, done: 8 -> 9
 		E4: 0-10, done: 9 -> 10
 	*/
 }
+init
+{
+	vars.DoneMaps = new List<int>();
+}
 
 startup
 {
+	vars.Episodes = new Dictionary<byte, string>
+	{
+		{0, "L.A. Meltdown"},
+		{1, "Lunar Apocalypse"},
+		{2, "Shrapnel City"},
+		{3, "The Birth"}
+	};
 	vars.E1Levels = new Dictionary<byte, string>
 	{
 		{0, "E1L1: Hollywood Holocaust"},
@@ -112,16 +125,23 @@ split
 	}
 	else
 	{
+		if(old.CurrentEpisode != current.CurrentEpisode)
+		{
+			vars.DoneMaps.Clear();
+		}
 		foreach (var episode in vars.Episodes)
 		{
 			if (current.CurrentEpisode == episode.Key)
 			{
-				//return true;
 				foreach (var level in episode.Value)
 				{
 					if (settings[level.Value] && current.CurrentMap != old.CurrentMap && old.CurrentMap == level.Key && current.CurrentMap != 0)
 					{
-						return true;
+						if(!vars.DoneMaps.Contains(current.CurrentMap)) 
+						{
+							vars.DoneMaps.Add(current.CurrentMap);
+							return true;
+						}
 					}
 				}
 			}
@@ -132,11 +152,17 @@ split
 reset
 {
 	if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0 && current.CurrentEpisode == 0 && current.CurrentMap == 0)
+	{
+		vars.DoneMaps.Clear();
 		return true;
+	}
 }
 
 start
 {
     if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0 && current.CurrentEpisode == 0 && current.CurrentMap == 0)
+	{	
+		vars.DoneMaps.Clear();
 		return true;
+	}
 }
