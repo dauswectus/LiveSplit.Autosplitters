@@ -89,16 +89,16 @@ startup
 		{3, vars.E4Levels}
 	};
 	
-	settings.Add("0", false, "L.A. Meltdown");
-	settings.Add("1", false, "Lunar Apocalypse");
-	settings.Add("2", false, "Shrapnel City");
-	settings.Add("3", false, "The Birth");
-	settings.Add("E", true, "Only split at the end of each episode");
+	settings.Add("0", true, "L.A. Meltdown");
+	settings.Add("1", true, "Lunar Apocalypse");
+	settings.Add("2", true, "Shrapnel City");
+	settings.Add("3", true, "The Birth");
+	settings.Add("E", false, "Only split at the end of each episode");
 	
 	foreach (var episode in vars.Episodes)
 	{
 		foreach (var level in episode.Value)
-			settings.Add(level.Value, false, level.Value, episode.Key.ToString());
+			settings.Add(level.Value, true, level.Value, episode.Key.ToString());
 	}
 }
 
