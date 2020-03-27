@@ -204,6 +204,29 @@ split
 							vars.DoneMaps.Add(current.CurrentMap);
 							return true;
 						}
+						else
+						{
+							if(current.CurrentEpisode == 0 && current.CurrentMap == 5 && old.CurrentMap == 4)
+							{
+								return true;
+							}
+							if(current.CurrentEpisode == 1 && current.CurrentMap == 9 && old.CurrentMap == 8)
+							{
+								return true;
+							}
+							if(current.CurrentEpisode == 2 && current.CurrentMap == 9 && old.CurrentMap == 8)
+							{
+								return true;
+							}
+							if(current.CurrentEpisode == 3 && current.CurrentMap == 10 && old.CurrentMap == 9)
+							{
+								return true;
+							}
+							if(current.CurrentEpisode == 4 && current.CurrentMap == 7 && old.CurrentMap == 6)
+							{
+								return true;
+							}
+						}
 					}
 				}
 			}
