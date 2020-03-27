@@ -1,22 +1,58 @@
-//Autosplitter for Duke Nukem 3D Atomic Edition (Steam version) with pkDuke3D v1.2
+//Autosplitter for Duke Nukem 3D Megaton, pkDuke3D, World Tour and Eduke32 editions
 //Made by Dauswectus & NABN00B
+//Thanks to Psych0sis for finding versions and state setup
 
-state("pkDuke3d") 
+state("pkDuke3d") //pkDuke3D
 {
 	byte IsMenuActive : 0x034B364, 0x33C; // Is menu active? (0, 1)
 	byte CurrentEpisode : 0x02A7420, 0x3C4; // Current Episode (0, 1, 2, 3)
 	byte CurrentMap : 0x021B328, 0x34C; // Current Map (values below)
-	
-	
-	/*
-		E1: 0-7, done: 4 -> 5
-		E2 & E3: 0-10, done: 8 -> 9
-		E4: 0-10, done: 9 -> 10
-	*/
+	uint IsButtonPressed : 0x02C99B4, 0x2EC; // NukeButtonIsPressed (65536 EXPERIMENTAL)
 }
+state("duke3d", "Megaton") // Megaton Edition
+{
+	byte IsMenuActive : 0x01CE4B4, 0x8DC; // Is menu active? (0, 1)
+	byte CurrentEpisode : 0x00D1E34, 0x3B4; // Current Episode (0, 1, 2, 3,)
+	byte CurrentMap : 0x00C0C10, 0x3B4; // Current Map (values below)
+	uint IsButtonPressed : 0x00DEBA4, 0x4EC; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+}
+state("duke3d", "WorldTour") // World Tour
+{
+	byte IsMenuActive : 0x002A384, 0x15C; // Is menu active? (0, 1) (Actually loading screen not menu since you can start a new game in the middle of an episode)
+	byte CurrentEpisode : 0x0049078, 0x44; // Current Episode (0, 1, 2, 3)
+	byte CurrentMap : 0x008348C, 0x3A0; // Current Map (values below)
+	uint IsButtonPressed : 0x013350C, 0x100; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+}
+state("Eduke32") // Eduke32
+{
+	byte IsMenuActive : 0x042AC40, 0x248; // Is menu active? (0, 1) (Actually loading screen not menu since you can start a new game in the middle of an episode)
+	byte CurrentEpisode : 0x03C3CA8, 0x84; // Current Episode (0, 1, 2, 3)
+	byte CurrentMap : 0x11F8A6E8, 0x1C; // Current Map (values below)
+	uint IsButtonPressedTemp : 0x09921EC, 0x65C; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+}
+	/*
+		E1 levels: 0-7, 	||	Episode finished if: 			4 changed to 5		||	Secret levels: 	5-7		||
+		E2 & E3 levels: 	||	0-10, Episode finished if : 	8 changed to 9		||	Secret levels: 	9-10	||
+		E4 levels: 0-10, 	||	Episode finished if: 	 		9 changed to 10		||	Secret level: 	10		||
+		E5 levels: 0-7		||	Episode finished if: 			6 changed to 7		|| 	Secret level: 	7		||
+	*/
 init
 {
 	vars.DoneMaps = new List<int>();
+	if (modules.First().ModuleMemorySize == 28385280)
+	{
+        version = "WorldTour";
+	}
+	else if (modules.First().ModuleMemorySize == 28860416)
+	{
+		version = "Megaton";
+	}
+	else
+	{
+        version = modules.First().FileVersionInfo.ProductVersion;
+    }
+		
+	print("Version: " + version);
 }
 
 startup
@@ -26,7 +62,8 @@ startup
 		{0, "L.A. Meltdown"},
 		{1, "Lunar Apocalypse"},
 		{2, "Shrapnel City"},
-		{3, "The Birth"}
+		{3, "The Birth"},
+		{4, "Alien World Order"}
 	};
 	vars.E1Levels = new Dictionary<byte, string>
 	{
@@ -81,19 +118,33 @@ startup
 		{9, "E4L10: The Queen"},
 		{10, "E4L11: Area 51 (Secret)"}
 	};
+	vars.E5Levels = new Dictionary<byte, string>
+	{
+		{0, "E5L1: High Times"},
+		{1, "E5L2: Red Ruckus"},
+		{2, "E5L3: Bloody Hell"},
+		{3, "E5L4: Mirage Barrage"},
+		{4, "E5L5: Tour de Nukem"},
+		{5, "E5L6: Golden Carnage"},
+		{6, "E5L7: Hollywood Inferno"},
+		{7, "E5L8: Prima Arena"},
+	};
 	vars.Episodes = new Dictionary<byte, Dictionary<byte, string>>
 	{
 		{0, vars.E1Levels},
 		{1, vars.E2Levels},
 		{2, vars.E3Levels},
-		{3, vars.E4Levels}
+		{3, vars.E4Levels},
+		{4, vars.E5Levels}
 	};
 	
 	settings.Add("0", true, "L.A. Meltdown");
 	settings.Add("1", true, "Lunar Apocalypse");
 	settings.Add("2", true, "Shrapnel City");
 	settings.Add("3", true, "The Birth");
+	settings.Add("4", true, "Alien World Order");
 	settings.Add("E", false, "Only split at the end of each episode");
+	settings.Add("I", false, "IL time splitting (EXPERIMENTAL)");
 	
 	foreach (var episode in vars.Episodes)
 	{
@@ -104,7 +155,14 @@ startup
 
 split
 {
-	if (settings["E"])
+	if(settings["I"])
+	{
+		if(current.IsButtonPressed >= 15)
+		{
+			return true;
+		}
+	}
+	else if (settings["E"])
 	{
 		if(current.CurrentEpisode == 0 && current.CurrentMap == 5 && old.CurrentMap == 4)
 		{
@@ -119,6 +177,10 @@ split
 			return true;
 		}
 		if(current.CurrentEpisode == 3 && current.CurrentMap == 10 && old.CurrentMap == 9)
+		{
+			return true;
+		}
+		if(current.CurrentEpisode == 4 && current.CurrentMap == 7 && old.CurrentMap == 6)
 		{
 			return true;
 		}
@@ -149,20 +211,35 @@ split
 	}
 }
 
+start
+{
+	if(settings["I"])
+	{
+		if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0)
+		{
+			return true;
+		}
+	}
+    else if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0 && current.CurrentMap == 0)
+	{	
+		vars.DoneMaps.Clear();
+		return true;
+	}
+}
+
 reset
 {
+	if(settings["I"])
+	{
+		if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0)
+		{
+			return true;
+		}
+	}
 	if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0 && current.CurrentEpisode == 0 && current.CurrentMap == 0)
 	{
 		vars.DoneMaps.Clear();
 		return true;
 	}
 }
-
-start
-{
-    if(current.IsMenuActive != old.IsMenuActive && current.IsMenuActive == 0 && current.CurrentEpisode == 0 && current.CurrentMap == 0)
-	{	
-		vars.DoneMaps.Clear();
-		return true;
-	}
-}
+// 17:15 2020. 03. 02.
