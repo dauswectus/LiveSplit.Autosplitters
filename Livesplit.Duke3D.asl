@@ -69,7 +69,7 @@ startup
 	{
 		{0, "E1L1: Hollywood Holocaust"},
 		{1, "E1L2: Red Light District"},
-		{2, "E1L3: Death Row"},
+		{2, "E1L3: Death Row (Disable on Any% skip)"},
 		{3, "E1L4: Toxic Dump"},
 		{4, "E1L5: The Abyss"},
 		{5, "E1L6: Launch Facility (Secret)"},
