@@ -1,8 +1,10 @@
-//Autosplitter for Duke Nukem 3D Megaton, pkDuke3D, World Tour and Eduke32 editions
-//Made by Dauswectus & NABN00B
-//Thanks to Psych0sis for finding versions and state setup
+// Autosplitter for Duke Nukem 3D, Duke It Out in D.C., Duke: Nuclear Winter and Duke Caribbean: Life's a Beach
+// for EDuke32, Megaton Edition, pkDuke3D, and 20th Anniversary World Tour editions
+// Made by Dauswectus & NABN00B
+// https://github.com/dauswectus/LiveSplit.Autosplitters/
+// Thanks to Psych0sis for finding versions and state setup
 
-state("pkDuke3d") //pkDuke3D
+state("pkDuke3d") // pkDuke3D
 {
 	byte IsMenuActive : 0x034B364, 0x33C; // Is menu active? (0, 1)
 	byte CurrentEpisode : 0x02A7420, 0x3C4; // Current Episode (0, 1, 2, 3)
@@ -11,31 +13,44 @@ state("pkDuke3d") //pkDuke3D
 }
 state("duke3d", "Megaton") // Megaton Edition
 {
-	byte IsMenuActive : 0x01CE4B4, 0x8DC; // Is menu active? (0, 1)
-	byte CurrentEpisode : 0x00D1E34, 0x3B4; // Current Episode (0, 1, 2, 3,)
-	byte CurrentMap : 0x00C0C10, 0x3B4; // Current Map (values below)
-	uint IsButtonPressed : 0x00DEBA4, 0x4EC; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+	byte IsMenuActive : 0x01CE4B4, 0x8DC;
+	byte CurrentEpisode : 0x00D1E34, 0x3B4;
+	byte CurrentMap : 0x00C0C10, 0x3B4;
+	uint IsButtonPressed : 0x00DEBA4, 0x4EC;
 }
-state("duke3d", "WorldTour") // World Tour
+state("duke3d", "WorldTour") // 20th Anniversary World Tour
 {
 	byte IsMenuActive : 0x002A384, 0x15C; // Is menu active? (0, 1) (Actually loading screen not menu since you can start a new game in the middle of an episode)
-	byte CurrentEpisode : 0x0049078, 0x44; // Current Episode (0, 1, 2, 3)
-	byte CurrentMap : 0x008348C, 0x3A0; // Current Map (values below)
-	uint IsButtonPressed : 0x013350C, 0x100; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+	byte CurrentEpisode : 0x0049078, 0x44; // Current Episode (0, 1, 2, 3, 4)
+	byte CurrentMap : 0x008348C, 0x3A0;
+	uint IsButtonPressed : 0x013350C, 0x100;
 }
-state("Eduke32") // Eduke32
+state("Eduke32") // EDuke32
 {
 	byte IsMenuActive : 0x042AC40, 0x248; // Is menu active? (0, 1) (Actually loading screen not menu since you can start a new game in the middle of an episode)
-	byte CurrentEpisode : 0x03C3CA8, 0x84; // Current Episode (0, 1, 2, 3)
-	byte CurrentMap : 0x11F8A6E8, 0x1C; // Current Map (values below)
-	uint IsButtonPressedTemp : 0x09921EC, 0x65C; // NukeButtonIsPressed (65536 EXPERIMENTAL)
+	byte CurrentEpisode : 0x03C3CA8, 0x84;
+	byte CurrentMap : 0x11F8A6E8, 0x1C;
+	uint IsButtonPressedTemp : 0x09921EC, 0x65C;
 }
-	/*
-		E1 levels: 0-7, 	||	Episode finished if: 			4 changed to 5		||	Secret levels: 	5-7		||
-		E2 & E3 levels: 	||	0-10, Episode finished if : 	8 changed to 9		||	Secret levels: 	9-10	||
-		E4 levels: 0-10, 	||	Episode finished if: 	 		9 changed to 10		||	Secret level: 	10		||
-		E5 levels: 0-7		||	Episode finished if: 			6 changed to 7		|| 	Secret level: 	7		||
-	*/
+
+/*
+	+-----------------------------------------+
+	| LEVEL BREAKDOWN                         |
+	+----+--------+--------+---------+--------+
+	| Ep | Levels | Secret | Deleted | Finish |
+	+----+--------+--------+---------+--------+
+	|  0 |  0- 7  |  5- 7  |   8-10  |  4-> 5 |
+	+----+--------+--------+---------+--------+
+	|  1 |        |        |         |        |
+	+----+        |  9-10  |         |  8-> 9 |
+	|  2 |  0-10  |        |  none   |        |
+	+----+        +--------+         +--------+
+	|  3 |        | 10     |         |  9->10 |
+	+----+--------+--------+---------+--------+
+	|  4 |  0- 7  |  7     |   8     |  6-> 7 |
+	+----+--------+--------+---------+--------+
+*/
+
 init
 {
 	vars.DoneMaps = new List<int>();
@@ -267,4 +282,3 @@ reset
 		return true;
 	}
 }
-// 17:15 2020. 03. 02.
