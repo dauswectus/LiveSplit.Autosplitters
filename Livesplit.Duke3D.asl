@@ -51,8 +51,6 @@ init
 	{
         version = modules.First().FileVersionInfo.ProductVersion;
     }
-		
-	print("Version: " + version);
 }
 
 startup
