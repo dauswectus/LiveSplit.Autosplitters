@@ -1,6 +1,7 @@
 // Autosplitter for Duke Nukem 3D, Duke It Out in D.C., Duke: Nuclear Winter and Duke Caribbean: Life's a Beach
 // for EDuke32, Megaton Edition, pkDuke3D, and 20th Anniversary World Tour editions
 // Made by Dauswectus & NABN00B
+// https://github.com/dauswectus/LiveSplit.Autosplitters/
 // Thanks to Psych0sis for finding versions and state setup
 
 state("pkDuke3d") // pkDuke3D
