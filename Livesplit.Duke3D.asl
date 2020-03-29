@@ -58,8 +58,8 @@ startup
 	vars.Episodes = new Dictionary<byte, string>
 	{
 		{0, "L.A. Meltdown"},
-		{1, "Lunar Apocalypse"},
-		{2, "Shrapnel City"},
+		{1, "Lunar Apocalypse / Nuclear Winter / Vacation Dukematch"},
+		{2, "Shrapnel City / Duke It Out in D.C. / Life's a Beach"},
 		{3, "The Birth"},
 		{4, "Alien World Order"}
 	};
@@ -67,46 +67,49 @@ startup
 	{
 		{0, "E1L1: Hollywood Holocaust"},
 		{1, "E1L2: Red Light District"},
-		{2, "E1L3: Death Row (Disable on Any% skip)"},
+		{2, "E1L3: Death Row (Disable for Any% skip)"},
 		{3, "E1L4: Toxic Dump"},
 		{4, "E1L5: The Abyss"},
 		{5, "E1L6: Launch Facility (Secret)"},
-		{6, "E1L7: Faces of Death (Deathmatch)"},
+		{6, "E1L7: Faces of Death (Secret)"},
 		{7, "E1L8: User Map (Custom)"}
+		//,{8, "E1L9: Void Zone"}
+		//,{9, "E1L10: Roach Condo"}
+		//,{10, "E1L11: Antiprofit"}
 	};
 	vars.E2Levels = new Dictionary<byte, string>
 	{
-		{0, "E2L1: Spaceport"},
-		{1, "E2L2: Incubator"},
-		{2, "E2L3: Warp Factor"},
-		{3, "E2L4: Fusion Station"},
-		{4, "E2L5: Occupied Territory"},
-		{5, "E2L6: Tiberius Station"},
-		{6, "E2L7: Lunar Reactor"},
-		{7, "E2L8: Dark Side"},
+		{0, "E2L1: Spaceport / Deja Vu / Island Hopping"},
+		{1, "E2L2: Incubator / Where It All Began / Hidden Grotto"},
+		{2, "E2L3: Warp Factor / Land of Forgotten Toys / Cruise Ship"},
+		{3, "E2L4: Fusion Station / Santa's Corporate HQ / The Docks"},
+		{4, "E2L5: Occupied Territory / The Backdoor"},
+		{5, "E2L6: Tiberius Station / Christmas Village"},
+		{6, "E2L7: Lunar Reactor / Here Comes Santa Claws"},
+		{7, "E2L8: Dark Side / Santamatch"},
 		{8, "E2L9: Overlord"},
 		{9, "E2L10: Spin Cycle (Secret)"},
 		{10, "E2L11: Lunatic Fringe (Secret)"}
 	};
 	vars.E3Levels = new Dictionary<byte, string>
 	{
-		{0, "E3L1: Raw Meat"},
-		{1, "E3L2: Bank Roll"},
-		{2, "E3L3: Flood Zone"},
-		{3, "E3L4: L.A. Rumble"},
-		{4, "E3L5: Movie Set"},
-		{5, "E3L6: Rabid Transit"},
-		{6, "E3L7: Fahrenheit"},
-		{7, "E3L8: Hotel Hell"},
-		{8, "E3L9: Stadium"},
-		{9, "E3L10: Tier Drops (Secret)"},
+		{0, "E3L1: Raw Meat / Hell to the Chief / Caribbean Catastrophe"},
+		{1, "E3L2: Bank Roll / Memorial Service / Market Melee"},
+		{2, "E3L3: Flood Zone / Nuked Files / Mr. Splashy's"},
+		{3, "E3L4: L.A. Rumble / Smithsonian Terror / The Wavemistress"},
+		{4, "E3L5: Movie Set / Capitol Punishment / Lost Lagoon"},
+		{5, "E3L6: Rabid Transit / Metro Mayhem / Voodoo Caves"},
+		{6, "E3L7: Fahrenheit / Brown Water / The Alien Remains"},
+		{7, "E3L8: Hotel Hell / Dread October / A Full House"},
+		{8, "E3L9: Stadium / Nuke Proof"},
+		{9, "E3L10: Tier Drops / Top Secret (Secret)"},
 		{10, "E3L11: Freeway (Secret)"}
 	};
 	vars.E4Levels = new Dictionary<byte, string>
 	{
 		{0, "E4L1: It's Impossible"},
 		{1, "E4L2: Duke-Burger"},
-		{2, "E4L3: Shop-N-Bag"},
+		{2, "E4L3: Shop-n-Bag"},
 		{3, "E4L4: Babe Land"},
 		{4, "E4L5: Pigsty"},
 		{5, "E4L6: Going Postal"},
@@ -125,7 +128,8 @@ startup
 		{4, "E5L5: Tour de Nukem"},
 		{5, "E5L6: Golden Carnage"},
 		{6, "E5L7: Hollywood Inferno"},
-		{7, "E5L8: Prima Arena"},
+		{7, "E5L8: Prima Arena (Secret)"}
+		//,{8, "E5L9"}
 	};
 	vars.Episodes = new Dictionary<byte, Dictionary<byte, string>>
 	{
@@ -137,8 +141,8 @@ startup
 	};
 	
 	settings.Add("0", true, "L.A. Meltdown");
-	settings.Add("1", true, "Lunar Apocalypse");
-	settings.Add("2", true, "Shrapnel City");
+	settings.Add("1", true, "Lunar Apocalypse / Nuclear Winter / Vacation Dukematch");
+	settings.Add("2", true, "Shrapnel City / Duke It Out in D.C. / Life's a Beach");
 	settings.Add("3", true, "The Birth");
 	settings.Add("4", true, "Alien World Order");
 	settings.Add("E", false, "Only split at the end of each episode");
