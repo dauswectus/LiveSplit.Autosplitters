@@ -7,6 +7,7 @@ state("swcr")
 	byte Stats : 0x045658, 0x74;
 	byte Pause : 0x1652B4, 0x8;
 	byte Loading: 0x09220C, 0x0;
+	byte Cutscene: 0x04389C, 0x0;
 }
 state("sw") 
 {
@@ -30,8 +31,8 @@ start
 }
 split
 {
-	if (old.Level != current.Level && current.Level != 1){
-		if(!vars.DoneMaps.Contains(current.Level))
+	if (old.Level != current.Level && current.Level != 1 || current.Cutscene == 1 && current.Level == 20){
+		if(!vars.DoneMaps.Contains(current.Level) && old.Level != 0)
 		{
 			vars.DoneMaps.Add(current.Level);
 			return true;
