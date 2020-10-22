@@ -1,5 +1,6 @@
 // Autosplitter for Shadow Warrior Classic Redux GOG and Steam versions
 // Made by: Dauswectus
+// Steam SDL stuff and ModuleMemorySize by: Psych0sis
 
 state("swcr") 
 {
@@ -16,9 +17,21 @@ state("sw")
 	byte Pause : 0x01675F4, 0x8;
 	byte Loading: 0x09457C, 0x0;
 }
-
+state("sw", "SDL")
+{
+	byte Level : 0x5DB0D8;
+	byte Stats : 0x5DB0BA;
+	byte Pause : 0x3CC4FC;
+	byte Loading : 0x3D544F;
+	byte Cutscene : 0x5DB6B0;
+}
+	
 init
 {
+	if (modules.First().ModuleMemorySize == 10256384){
+		version = "SDL";
+	}
+	
 	vars.DoneMaps = new List<int>();
 }
 
