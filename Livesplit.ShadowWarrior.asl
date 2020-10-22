@@ -31,11 +31,15 @@ start
 }
 split
 {
-	if (old.Level != current.Level && current.Level != 1 || current.Cutscene == 1 && current.Level == 20){
+	if (old.Level != current.Level && current.Level != 1){
 		if(!vars.DoneMaps.Contains(current.Level) && old.Level != 0)
 		{
 			vars.DoneMaps.Add(current.Level);
 			return true;
 		}
+	}
+	else if(current.Cutscene == 1 && current.Level == 20)
+	{
+		return true;
 	}
 }
