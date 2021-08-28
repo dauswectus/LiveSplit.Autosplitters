@@ -11,6 +11,13 @@ state("pkDuke3d") // pkDuke3D
 	byte CurrentMap : 0x021B328, 0x34C; // Current Map (values below)
 	uint IsButtonPressed : 0x02C99B4, 0x2EC; // NukeButtonIsPressed (65536 EXPERIMENTAL)
 }
+state("pkDuke3d", "pkDuke3D13") // pkDuke3D 1.3
+{
+	byte IsMenuActive : 0x02A7624, 0x0; // Is menu active? (0, 1)
+	byte CurrentEpisode : 0x02A78F0, 0x4; // Current Episode (0, 1, 2, 3)
+	byte CurrentMap : 0x02ABC48, 0x4; // Current Map (values below)
+	uint IsButtonPressed : 0x02C99B4, 0x2EC; // NukeButtonIsPressed (65536 EXPERIMENTAL) //Not working
+}
 state("duke3d", "Megaton") // Megaton Edition
 {
 	byte IsMenuActive : 0x01CE4B4, 0x8DC;
@@ -27,10 +34,10 @@ state("duke3d", "WorldTour") // 20th Anniversary World Tour
 }
 state("Eduke32") // EDuke32
 {
-	byte IsMenuActive : 0x042AC40, 0x248; // Is menu active? (0, 1) (Actually loading screen not menu since you can start a new game in the middle of an episode)
-	byte CurrentEpisode : 0x03C3CA8, 0x84;
-	byte CurrentMap : 0x11F8A6E8, 0x1C;
-	uint IsButtonPressedTemp : 0x09921EC, 0x65C;
+	byte IsMenuActive : 0x04A3350, 0x0; // Is menu active? (0, 1)
+	byte CurrentEpisode : 0x0416B28, 0x4;
+	byte CurrentMap : 0x0416B68, 0x4;
+	uint IsButtonPressedTemp : 0x09921EC, 0x65C; //Not working
 }
 
 /*
@@ -62,6 +69,10 @@ init
 	{
 		version = "Megaton";
 	}
+	else if (modules.First().ModuleMemorySize == 32632832)
+	{
+		version = "pkDuke3D13";
+    	}
 	else
 	{
         version = modules.First().FileVersionInfo.ProductVersion;
