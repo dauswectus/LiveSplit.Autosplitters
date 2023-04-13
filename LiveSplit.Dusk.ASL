@@ -28,7 +28,7 @@ update
 	{
 		current.StatsTimer = current.StatsScreenTimeMinutes*60000 + (int)Math.Round(current.StatsScreenTimeSeconds*100)*10;
 		
-		if(current.Level == 22 || current.Level == 37)
+		if(current.Level == 22 || current.Level == 37 || current.Level == 3)
 		{
 			old.StatsTimer = 0;
 		}
